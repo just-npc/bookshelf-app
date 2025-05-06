@@ -32,3 +32,44 @@ function saveData() {
     document.dispatchEvent(new Event(SAVED_EVENT));
   }
 }
+
+function generateId() {
+  return Number(new Date());
+}
+
+function generateBookObject(id, title, author, year, isCompleted) {
+  return {
+    id,
+    title,
+    author,
+    year,
+    isCompleted,
+  };
+}
+
+function addBook() {
+  const id = generateId();
+  const title = document.getElementById("bookFormTitle").value;
+  const author = document.getElementById("bookFormAuthor").value;
+  const year = document.getElementById("bookFormYear").value;
+  const isCompleted = document.getElementById("bookFormIsComplete").checked;
+  // const isCompletedCheck = isCompleted.checked;
+
+  const bookObject = generateBookObject(id, title, author, year, isCompleted);
+  books.push(bookObject);
+
+  document.dispatchEvent(new Event(SAVED_EVENT));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const submitForm = document.getElementById("bookForm");
+  submitForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    addBook();
+    submitForm.reset();
+  });
+});
+
+document.addEventListener(SAVED_EVENT, function () {
+  console.log(books);
+});

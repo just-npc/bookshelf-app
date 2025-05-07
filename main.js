@@ -73,3 +73,46 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener(SAVED_EVENT, function () {
   console.log(books);
 });
+
+function makeBook(bookObject) {
+  // fungsinya jadi container
+  const bookId = document.createElement("div");
+  bookId.setAttribute("data-bookId", `${bookObject.id}`);
+  bookId.setAttribute("data-testid", "bookItem");
+
+  // title
+  const bookTitle = document.createElement("h3");
+  bookTitle.setAttribute("data-testid", "bookItemTitle");
+  bookTitle.innerText = bookObject.title;
+
+  // author
+  const bookAuthor = document.createElement("p");
+  bookAuthor.setAttribute("data-testid", "bookItemAuthor");
+  bookAuthor.innerText = bookObject.author;
+
+  // year
+  const bookYear = document.createElement("p");
+  bookYear.setAttribute("data-testid", "bookItemYear");
+  bookYear.innerText = bookObject.year;
+
+  // button wrapper
+  const btnWrapper = document.createElement("div");
+
+  // isCompleted btn
+  const isCompletedBtn = document.createElement("button");
+  isCompletedBtn.classList.add("complete-btn");
+  isCompletedBtn.setAttribute("data-testid", "bookItemIsCompleteButton");
+  isCompletedBtn.innerText = "Selesai dibaca";
+
+  // delete btn
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.setAttribute("data-testid", "bookItemDeleteButton");
+  deleteBtn.innerText = "Hapus buku";
+
+  // edit btn
+  const editBtn = document.createElement("button");
+  editBtn.classList.add("edit-btn");
+  editBtn.setAttribute("data-testid", "bookItemEditButton");
+  editBtn.innerText = "Edit buku";
+}

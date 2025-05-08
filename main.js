@@ -53,7 +53,6 @@ function addBook() {
   const author = document.getElementById("bookFormAuthor").value;
   const year = document.getElementById("bookFormYear").value;
   const isCompleted = document.getElementById("bookFormIsComplete").checked;
-  // const isCompletedCheck = isCompleted.checked;
 
   const bookObject = generateBookObject(id, title, author, year, isCompleted);
   books.push(bookObject);
@@ -73,13 +72,56 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener(SAVED_EVENT, function () {
   console.log(books);
   const incompleteBookList = document.getElementById("incompleteBookList");
+  const completeBookList = document.getElementById("completeBookList");
+
   incompleteBookList.innerHTML = "";
+  completeBookList.innerHTML = "";
 
   for (const bookList of books) {
     const bookElement = makeBook(bookList);
-    incompleteBookList.append(bookElement);
+    if (!bookList.isCompleted) {
+      incompleteBookList.append(bookElement);
+    } else {
+      completeBookList.append(bookElement);
+    }
   }
 });
+
+function findBook(bookId) {
+  for (const bookItem of books) {
+    if (bookItem.id === bookId) {
+      return bookItem;
+    }
+  }
+
+  return null;
+}
+
+function addBookToCompleted(bookId) {
+  const bookTarget = findBook(bookId);
+
+  if (bookTarget == null) return;
+
+  bookTarget.isCompleted = true;
+  document.dispatchEvent(new Event(SAVED_EVENT));
+}
+
+function addBookToNotCompleted(bookId) {
+  const bookTarget = findBook(bookId);
+
+  if (bookTarget == null) return;
+
+  bookTarget.isCompleted = false;
+  document.dispatchEvent(new Event(SAVED_EVENT));
+}
+
+function deleteBook(e) {
+  console.log(e);
+  books.splice(e, 1);
+  console.log(books);
+
+  document.dispatchEvent(new Event(SAVED_EVENT));
+}
 
 function makeBook(bookObject) {
   // fungsinya jadi container
@@ -110,13 +152,15 @@ function makeBook(bookObject) {
   const isCompletedBtn = document.createElement("button");
   isCompletedBtn.classList.add("complete-btn");
   isCompletedBtn.setAttribute("data-testid", "bookItemIsCompleteButton");
-  isCompletedBtn.innerText = "Selesai dibaca";
 
   // delete btn
   const deleteBtn = document.createElement("button");
   deleteBtn.classList.add("delete-btn");
   deleteBtn.setAttribute("data-testid", "bookItemDeleteButton");
   deleteBtn.innerText = "Hapus buku";
+  deleteBtn.addEventListener("click", function (e) {
+    deleteBook(e);
+  });
 
   // edit btn
   const editBtn = document.createElement("button");
@@ -127,6 +171,19 @@ function makeBook(bookObject) {
   btnWrapper.append(isCompletedBtn, deleteBtn, editBtn);
 
   bookId.append(bookTitle, bookAuthor, bookYear, btnWrapper);
+
+  if (bookObject.isCompleted) {
+    isCompletedBtn.addEventListener("click", function () {
+      addBookToNotCompleted(bookObject.id);
+    });
+    isCompletedBtn.innerText = "Belum Selesai";
+    isCompletedBtn.style.background = "#C4A1FF";
+  } else {
+    isCompletedBtn.addEventListener("click", function () {
+      addBookToCompleted(bookObject.id);
+    });
+    isCompletedBtn.innerText = "Selesai dibaca";
+  }
 
   return bookId;
 }

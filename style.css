@@ -46,6 +46,13 @@ section.card:nth-of-type(3) {
   border: 2px solid black;
   font-size: 1rem;
 }
+
+#bookFormIsComplete {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: auto;
+}
+
 section:nth-of-type(2) input {
   display: block;
   width: 30%;
@@ -75,6 +82,7 @@ section:nth-of-type(2) button {
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
+  font-size: 1.2rem;
 }
 
 .card button:hover {
@@ -91,12 +99,8 @@ section:nth-of-type(2) button {
   margin-top: 1rem;
 }
 
-/* .book-item {
-  border: 2px solid black;
-} */
-
 .complete-btn {
-  background: #7fbc8c;
+  background: #b5d2ad;
   display: block;
 }
 
@@ -108,6 +112,7 @@ section:nth-of-type(2) button {
   background: #daf5f0;
 }
 
-.submit-btn {
-  background: #b5d2ad;
+button.submit-btn {
+  background: #fdfd96;
+  margin-top: 1rem;
 }

@@ -81,6 +81,20 @@ section:nth-of-type(2) button {
   translate: -6px;
 }
 
+.book-item {
+  border: 2px solid black;
+  padding: 0.7rem;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* .book-item {
+  border: 2px solid black;
+} */
+
 .complete-btn {
   background: #7fbc8c;
   display: block;

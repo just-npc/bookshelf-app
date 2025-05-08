@@ -72,6 +72,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener(SAVED_EVENT, function () {
   console.log(books);
+  const incompleteBookList = document.getElementById("incompleteBookList");
+  incompleteBookList.innerHTML = "";
+
+  for (const bookList of books) {
+    const bookElement = makeBook(bookList);
+    incompleteBookList.append(bookElement);
+  }
 });
 
 function makeBook(bookObject) {
@@ -79,6 +86,7 @@ function makeBook(bookObject) {
   const bookId = document.createElement("div");
   bookId.setAttribute("data-bookId", `${bookObject.id}`);
   bookId.setAttribute("data-testid", "bookItem");
+  bookId.classList.add("book-item");
 
   // title
   const bookTitle = document.createElement("h3");
@@ -115,4 +123,10 @@ function makeBook(bookObject) {
   editBtn.classList.add("edit-btn");
   editBtn.setAttribute("data-testid", "bookItemEditButton");
   editBtn.innerText = "Edit buku";
+
+  btnWrapper.append(isCompletedBtn, deleteBtn, editBtn);
+
+  bookId.append(bookTitle, bookAuthor, bookYear, btnWrapper);
+
+  return bookId;
 }

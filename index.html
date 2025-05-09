@@ -96,6 +96,35 @@
         </div>
       </div>
     </section>
+
+    <!-- modal untuk edit buku -->
+    <div class="modal">
+      <h2>Tambah Buku Baru</h2>
+      <div class="modal-content">
+        <form id="bookFormEdit" data-testid="bookFormEdit">
+          <div>
+            <label for="bookFormTitleEdit">Judul</label>
+            <input id="bookFormTitleEdit" type="text" required data-testid="bookFormTitleInputEdit" />
+          </div>
+          <div>
+            <label for="bookFormAuthorEdit">Penulis</label>
+            <input id="bookFormAuthorEdit" type="text" required data-testid="bookFormAuthorInputEdit" />
+          </div>
+          <div>
+            <label for="bookFormYearEdit">Tahun</label>
+            <input id="bookFormYearEdit" type="number" required data-testid="bookFormYearInputEdit" />
+          </div>
+          <div>
+            <label for="bookFormIsCompleteEdit">Selesai dibaca</label>
+            <input id="bookFormIsCompleteEdit" type="checkbox" data-testid="bookFormIsCompleteCheckboxEdit" />
+          </div>
+          <button class="submit-btn" id="bookFormSubmitEdit" type="submit" data-testid="bookFormSubmitButton">
+            Selesai Edit
+            <!-- <span>Belum selesai dibaca</span> -->
+          </button>
+      </div>
+      </form>
+    </div>
   </main>
 </body>
 

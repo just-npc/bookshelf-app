@@ -38,7 +38,9 @@ section.card:nth-of-type(3) {
 }
 
 .card input,
-.card button {
+.card button,
+.modal-content input,
+.modal-content button {
   display: block;
   width: 100%;
   margin: 0.5rem 0;
@@ -77,7 +79,8 @@ section:nth-of-type(2) button {
   cursor: pointer;
 }
 
-.card button {
+.card button,
+.modal-content button {
   translate: -6px -6px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -85,7 +88,8 @@ section:nth-of-type(2) button {
   font-size: 1.2rem;
 }
 
-.card button:hover {
+.card button:hover,
+.modal-content button:hover {
   translate: -6px;
 }
 
@@ -115,4 +119,24 @@ section:nth-of-type(2) button {
 button.submit-btn {
   background: #fdfd96;
   margin-top: 1rem;
+}
+
+/* modal style */
+.modal {
+  /* display: none; */
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  display: flex;
+  margin: 8rem auto;
+  background-color: white;
+  width: fit-content;
+  padding: 30px;
+  border-radius: 10px;
 }

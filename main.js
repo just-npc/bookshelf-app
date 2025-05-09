@@ -60,6 +60,20 @@ function addBook() {
   document.dispatchEvent(new Event(SAVED_EVENT));
 }
 
+function editBook(bookId) {
+  console.log("hello");
+  document.getElementById("modal").style.display = "inline-block";
+  console.log(bookId);
+
+  const index = Number(books.findIndex((book) => book.id === bookId));
+  console.log(index);
+  if (index !== -1) {
+    console.log("Index ditemukan:", index);
+    console.log("Data sebelum diedit:", books[index]);
+    console.log("miawww");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const submitForm = document.getElementById("bookForm");
   submitForm.addEventListener("submit", function (e) {
@@ -68,6 +82,16 @@ document.addEventListener("DOMContentLoaded", function () {
     submitForm.reset();
   });
 });
+
+// untuk modal edit form
+// document.addEventListener("DOMContentLoaded", function () {
+//   const submitFormEdit = document.getElementById("bookFormEdit");
+//   submitFormEdit.addEventListener("submit", function () {
+//     e.preventDefault();
+//     editBook();
+//     submitForm.reset();
+//   });
+// });
 
 document.addEventListener(SAVED_EVENT, function () {
   console.log(books);
@@ -167,6 +191,11 @@ function makeBook(bookObject) {
   editBtn.classList.add("edit-btn");
   editBtn.setAttribute("data-testid", "bookItemEditButton");
   editBtn.innerText = "Edit buku";
+  editBtn.addEventListener("click", function (e) {
+    const getBookId = e.target.closest('[data-testid="bookItem"]');
+    const someBookId = parseInt(getBookId.dataset.bookid);
+    editBook(someBookId);
+  });
 
   btnWrapper.append(isCompletedBtn, deleteBtn, editBtn);
 

@@ -65,6 +65,11 @@ function editBook(bookId) {
   document.getElementById("modal").style.display = "inline-block";
   console.log(bookId);
 
+  //ambil data dari input modal
+  const editTitle = document.getElementById("bookFormTitleEdit");
+  const editAuthor = document.getElementById("bookFormAuthorEdit");
+  const editYear = document.getElementById("bookFormYearEdit");
+
   const index = Number(books.findIndex((book) => book.id === bookId));
   console.log(index);
   if (index !== -1) {
@@ -84,14 +89,14 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // untuk modal edit form
-// document.addEventListener("DOMContentLoaded", function () {
-//   const submitFormEdit = document.getElementById("bookFormEdit");
-//   submitFormEdit.addEventListener("submit", function () {
-//     e.preventDefault();
-//     editBook();
-//     submitForm.reset();
-//   });
-// });
+document.addEventListener("DOMContentLoaded", function () {
+  const submitFormEdit = document.getElementById("bookFormEdit");
+  submitFormEdit.addEventListener("submit", function () {
+    e.preventDefault();
+    editBook();
+    submitForm.reset();
+  });
+});
 
 document.addEventListener(SAVED_EVENT, function () {
   console.log(books);

@@ -102,6 +102,27 @@ function editBook() {
   editId = null;
 }
 
+// fungsi untuk mencari dan menampilkan buku
+function searchBook() {
+  const title = document.getElementById("searchBookTitle").value.toLowerCase();
+  const bookTitle = document.querySelectorAll("#book-title");
+  const searchInfo = document.querySelector(".search-info");
+
+  let found = false;
+  searchInfo.innerHTML = "";
+
+  bookTitle.forEach((item) => {
+    if (item.innerText.toLowerCase().includes(title)) {
+      item.scrollIntoView({ behavior: "smooth", block: "center" });
+      found = true;
+    }
+  });
+
+  if (!found) {
+    searchInfo.innerHTML = "Buku Tidak ditemukan!";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const submitForm = document.getElementById("bookForm");
   submitForm.addEventListener("submit", function (e) {
@@ -117,6 +138,16 @@ document.addEventListener("DOMContentLoaded", function () {
   submitFormEdit.addEventListener("submit", function (e) {
     e.preventDefault();
     editBook();
+  });
+});
+
+// untuk nyari buku
+document.addEventListener("DOMContentLoaded", function () {
+  const searchBookForm = document.getElementById("searchBook");
+  searchBookForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    searchBook();
+    searchBookForm.reset();
   });
 });
 
@@ -184,6 +215,7 @@ function makeBook(bookObject) {
   // title
   const bookTitle = document.createElement("h3");
   bookTitle.setAttribute("data-testid", "bookItemTitle");
+  bookTitle.setAttribute("id", "book-title");
   bookTitle.innerText = bookObject.title;
 
   // author

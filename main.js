@@ -14,6 +14,9 @@ let books = [
 const SAVED_EVENT = "saved-book";
 const STORAGE_KEY = "BOOKSHELF_APPS";
 
+// variabel global scope untuk menyimpan id buku yg ingin diedit
+let editId = null;
+
 // fungsi untuk memeriksa apakah browser support local storage
 function isStorageExist() {
   if (typeof Storage === undefined) {
@@ -60,23 +63,43 @@ function addBook() {
   document.dispatchEvent(new Event(SAVED_EVENT));
 }
 
-function editBook(bookId) {
+// fungsi untuk buka modal dan value input terisi sesuai data yg ada
+function openEditModal(bookId) {
   console.log("hello");
   document.getElementById("modal").style.display = "inline-block";
   console.log(bookId);
 
-  //ambil data dari input modal
-  const editTitle = document.getElementById("bookFormTitleEdit");
-  const editAuthor = document.getElementById("bookFormAuthorEdit");
-  const editYear = document.getElementById("bookFormYearEdit");
+  const book = books.find((b) => b.id === bookId);
 
-  const index = Number(books.findIndex((book) => book.id === bookId));
-  console.log(index);
+  if (!book) return alert("Data buku tidak ditemukan!");
+
+  editId = bookId;
+  // document.getElementById("editId").value = book.id;
+  document.getElementById("bookFormTitleEdit").value = book.title;
+  document.getElementById("bookFormAuthorEdit").value = book.author;
+  document.getElementById("bookFormYearEdit").checked = book.year;
+}
+
+function editBook() {
+  const newTitle = document.getElementById("bookFormTitleEdit").value;
+  const newAuthor = document.getElementById("bookFormAuthorEdit").value;
+  const newYear = document.getElementById("bookFormYearEdit").value;
+  const newIsComplete = document.getElementById(
+    "bookFormIsCompleteEdit"
+  ).checked;
+
+  const index = books.findIndex((book) => book.id === editId);
   if (index !== -1) {
-    console.log("Index ditemukan:", index);
-    console.log("Data sebelum diedit:", books[index]);
-    console.log("miawww");
+    books[index].title = newTitle;
+    books[index].author = newAuthor;
+    books[index].year = newYear;
+    books[index].isCompleted = newIsComplete;
+
+    document.dispatchEvent(new Event(SAVED_EVENT));
+    document.getElementById("modal").style.display = "none";
   }
+
+  editId = null;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -91,10 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // untuk modal edit form
 document.addEventListener("DOMContentLoaded", function () {
   const submitFormEdit = document.getElementById("bookFormEdit");
-  submitFormEdit.addEventListener("submit", function () {
+  submitFormEdit.addEventListener("submit", function (e) {
     e.preventDefault();
     editBook();
-    submitForm.reset();
   });
 });
 
@@ -197,9 +219,10 @@ function makeBook(bookObject) {
   editBtn.setAttribute("data-testid", "bookItemEditButton");
   editBtn.innerText = "Edit buku";
   editBtn.addEventListener("click", function (e) {
-    const getBookId = e.target.closest('[data-testid="bookItem"]');
-    const someBookId = parseInt(getBookId.dataset.bookid);
-    editBook(someBookId);
+    const bookItems = e.target.closest(".book-item");
+    const bookId = parseInt(bookItems.dataset.bookid);
+
+    openEditModal(bookId);
   });
 
   btnWrapper.append(isCompletedBtn, deleteBtn, editBtn);

@@ -61,6 +61,7 @@ function addBook() {
   books.push(bookObject);
 
   document.dispatchEvent(new Event(SAVED_EVENT));
+  saveData();
 }
 
 // fungsi untuk buka modal dan value input terisi sesuai data yg ada
@@ -95,8 +96,9 @@ function editBook() {
     books[index].year = newYear;
     books[index].isCompleted = newIsComplete;
 
-    document.dispatchEvent(new Event(SAVED_EVENT));
     document.getElementById("modal").style.display = "none";
+    document.dispatchEvent(new Event(SAVED_EVENT));
+    saveData();
   }
 
   editId = null;
@@ -151,8 +153,28 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  if (isStorageExist()) {
+    loadDataFromStorage();
+  }
+});
+
+function loadDataFromStorage() {
+  const serializedData = localStorage.getItem(STORAGE_KEY);
+  let data = JSON.parse(serializedData);
+
+  if (data !== null) {
+    for (const book of data) {
+      books.push(book);
+    }
+  }
+
+  document.dispatchEvent(new Event(SAVED_EVENT));
+}
+
 document.addEventListener(SAVED_EVENT, function () {
   console.log(books);
+  console.log(localStorage.getItem(STORAGE_KEY));
   const incompleteBookList = document.getElementById("incompleteBookList");
   const completeBookList = document.getElementById("completeBookList");
 
@@ -186,6 +208,7 @@ function addBookToCompleted(bookId) {
 
   bookTarget.isCompleted = true;
   document.dispatchEvent(new Event(SAVED_EVENT));
+  saveData();
 }
 
 function addBookToNotCompleted(bookId) {
@@ -195,6 +218,7 @@ function addBookToNotCompleted(bookId) {
 
   bookTarget.isCompleted = false;
   document.dispatchEvent(new Event(SAVED_EVENT));
+  saveData();
 }
 
 function deleteBook(e) {
@@ -203,6 +227,7 @@ function deleteBook(e) {
   console.log(books);
 
   document.dispatchEvent(new Event(SAVED_EVENT));
+  saveData();
 }
 
 function makeBook(bookObject) {
@@ -274,5 +299,6 @@ function makeBook(bookObject) {
     isCompletedBtn.innerText = "Selesai dibaca";
   }
 
+  // saveData();
   return bookId;
 }

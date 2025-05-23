@@ -7,7 +7,7 @@ let books = [
     title: string,
     author: string,
     year: number,
-    isCompleted: boolean
+    isComplete: boolean
   } */
 ];
 
@@ -40,13 +40,13 @@ function generateId() {
   return Number(new Date());
 }
 
-function generateBookObject(id, title, author, year, isCompleted) {
+function generateBookObject(id, title, author, year, isComplete) {
   return {
     id,
     title,
     author,
     year,
-    isCompleted,
+    isComplete,
   };
 }
 
@@ -54,10 +54,10 @@ function addBook() {
   const id = generateId();
   const title = document.getElementById("bookFormTitle").value;
   const author = document.getElementById("bookFormAuthor").value;
-  const year = document.getElementById("bookFormYear").value;
-  const isCompleted = document.getElementById("bookFormIsComplete").checked;
+  const year = parseInt(document.getElementById("bookFormYear").value);
+  const isComplete = document.getElementById("bookFormIsComplete").checked;
 
-  const bookObject = generateBookObject(id, title, author, year, isCompleted);
+  const bookObject = generateBookObject(id, title, author, year, isComplete);
   books.push(bookObject);
 
   document.dispatchEvent(new Event(SAVED_EVENT));
@@ -127,6 +127,7 @@ function searchBook() {
 
 document.addEventListener("DOMContentLoaded", function () {
   const submitForm = document.getElementById("bookForm");
+
   submitForm.addEventListener("submit", function (e) {
     e.preventDefault();
     addBook();

@@ -94,7 +94,7 @@ function editBook() {
     books[index].title = newTitle;
     books[index].author = newAuthor;
     books[index].year = newYear;
-    books[index].isCompleted = newIsComplete;
+    books[index].isComplete = newIsComplete;
 
     document.getElementById("modal").style.display = "none";
     document.dispatchEvent(new Event(SAVED_EVENT));
@@ -184,7 +184,7 @@ document.addEventListener(SAVED_EVENT, function () {
 
   for (const bookList of books) {
     const bookElement = makeBook(bookList);
-    if (!bookList.isCompleted) {
+    if (!bookList.isComplete) {
       incompleteBookList.append(bookElement);
     } else {
       completeBookList.append(bookElement);
@@ -207,7 +207,7 @@ function addBookToCompleted(bookId) {
 
   if (bookTarget == null) return;
 
-  bookTarget.isCompleted = true;
+  bookTarget.isComplete = true;
   document.dispatchEvent(new Event(SAVED_EVENT));
   saveData();
 }
@@ -217,7 +217,7 @@ function addBookToNotCompleted(bookId) {
 
   if (bookTarget == null) return;
 
-  bookTarget.isCompleted = false;
+  bookTarget.isComplete = false;
   document.dispatchEvent(new Event(SAVED_EVENT));
   saveData();
 }
@@ -257,10 +257,10 @@ function makeBook(bookObject) {
   // button wrapper
   const btnWrapper = document.createElement("div");
 
-  // isCompleted btn
-  const isCompletedBtn = document.createElement("button");
-  isCompletedBtn.classList.add("complete-btn");
-  isCompletedBtn.setAttribute("data-testid", "bookItemIsCompleteButton");
+  // isComplete btn
+  const isCompleteBtn = document.createElement("button");
+  isCompleteBtn.classList.add("complete-btn");
+  isCompleteBtn.setAttribute("data-testid", "bookItemIsCompleteButton");
 
   // delete btn
   const deleteBtn = document.createElement("button");
@@ -283,21 +283,21 @@ function makeBook(bookObject) {
     openEditModal(bookId);
   });
 
-  btnWrapper.append(isCompletedBtn, deleteBtn, editBtn);
+  btnWrapper.append(isCompleteBtn, deleteBtn, editBtn);
 
   bookId.append(bookTitle, bookAuthor, bookYear, btnWrapper);
 
-  if (bookObject.isCompleted) {
-    isCompletedBtn.addEventListener("click", function () {
+  if (bookObject.isComplete) {
+    isCompleteBtn.addEventListener("click", function () {
       addBookToNotCompleted(bookObject.id);
     });
-    isCompletedBtn.innerText = "Belum Selesai";
-    isCompletedBtn.style.background = "#C4A1FF";
+    isCompleteBtn.innerText = "Belum Selesai";
+    isCompleteBtn.style.background = "#C4A1FF";
   } else {
-    isCompletedBtn.addEventListener("click", function () {
+    isCompleteBtn.addEventListener("click", function () {
       addBookToCompleted(bookObject.id);
     });
-    isCompletedBtn.innerText = "Selesai dibaca";
+    isCompleteBtn.innerText = "Selesai dibaca";
   }
 
   // saveData();

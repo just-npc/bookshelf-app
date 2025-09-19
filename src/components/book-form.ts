@@ -1,3 +1,5 @@
+import { IncompleteBookList } from "./incomplete-booklist";
+
 export class Bookform extends HTMLElement {
   _style: HTMLStyleElement;
 
@@ -56,7 +58,7 @@ export class Bookform extends HTMLElement {
 
     const submitForm = this.querySelector("#bookForm") as HTMLFormElement;
 
-    submitForm?.addEventListener("submit", function (e) {
+    submitForm?.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const id = Number(new Date());
@@ -80,6 +82,12 @@ export class Bookform extends HTMLElement {
       };
 
       console.log(books);
+      // TODO: dont forget to add books object to bookList component method
+      const bookListEl = document.querySelector(
+        "incomplete-booklist"
+      ) as IncompleteBookList;
+      bookListEl.setBookList(books);
+      console.log(bookListEl);
 
       console.log("bisa cok");
       submitForm.reset();
